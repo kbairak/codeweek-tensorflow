@@ -140,7 +140,10 @@ $ pip install -r requirements.txt
 
 ## Topics
 
-- [01. Basic tensorflow usage](/01-basic)
+- [01. Basic tensorflow usage](/01_basic)
+- [02. Fashion MNIST](/02_fashion_mnist)
+- [03. MNIST](/03_mnist)
+- [04. MNIST with convnets](/04_mnist_conv)
 
 
 [Tensorflow]: https://www.tensorflow.org/
