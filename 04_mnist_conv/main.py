@@ -2,10 +2,13 @@ import tensorflow as tf
 import numpy as np
 
 
-def model_fn(features, labels, mode, params):
-    net = tf.reshape(features['x'], (-1, 784))
-    for layer_size in params['hidden_layers']:
-        net = tf.layers.dense(net, layer_size)
+def model_fn(features, labels, mode):
+    net = tf.reshape(features['x'], (-1, 28, 28, 1))
+
+    net = tf.layers.conv2d(net, filters=1, kernel_size=[3, 3], padding="same",
+                           activation=tf.nn.relu)
+    net = tf.reshape(net, (-1, 784))
+
     logits = tf.layers.dense(net, 10)
     predictions = {'classes': tf.argmax(input=logits, axis=1),
                    'probabilities': tf.nn.softmax(logits)}
@@ -31,8 +34,7 @@ def main():
         datasets.mnist.load_data()
 
     classifier = tf.estimator.Estimator(model_fn=model_fn,
-                                        model_dir='model_dir',
-                                        params={'hidden_layers': [1024, 512]})
+                                        model_dir='model_dir')
     train_input_fn = tf.estimator.inputs.numpy_input_fn(
         x={'x': np.asarray(train_images / 255, np.float32)},
         y=np.asarray(train_labels, np.int32),

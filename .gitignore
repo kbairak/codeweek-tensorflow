@@ -1,3 +1,4 @@
 tags
 codeweek_venv
 **/model_dir
+**/.mypy_cache
